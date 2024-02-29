@@ -1,9 +1,27 @@
 import "./Weather.css";
+import React, { useEffect, useState } from "react";
 import clear from "./images/clear.png";
 import humidity from "./images/humidity.png";
 import wind from "./images/wind.png";
 
 export default function Weather() {
+
+    const [search, setSearch] = useState("Baran");
+    const [loading, setLoading] = useState(true);
+    const [city, setCity] = useState(null);
+    const apiKey = "5ae31873f38f72e145efd7dcf91bb748";
+  
+    useEffect(() => {
+      const fetchWeather = async () => {
+        const url = `https://api.openweathermap.org/data/2.5/weather?q=${search}&units=metric&appid=${apiKey}`;
+        setLoading(true);
+        const response = await fetch(url);
+        const result = await response.json();
+        setCity(result);
+        setLoading(false);
+      };
+      fetchWeather();
+    }, [search]);
 
   return (
     <div className="App">
