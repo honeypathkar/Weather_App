@@ -46,6 +46,12 @@
     border-radius: 50%;
   }
 
+  .error{
+    font-size: 30px;
+	  text-align: center;
+	  padding: 50px;
+  }
+
   
   .App {
     width: 300px; /* Adjust as needed */

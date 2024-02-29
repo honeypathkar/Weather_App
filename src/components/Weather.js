@@ -1,5 +1,6 @@
 import "./Weather.css";
 import React, { useEffect, useState } from "react";
+import Spinner from "./Spinner"
 import clear from "./images/clear.png";
 import humidity from "./images/humidity.png";
 import wind from "./images/wind.png";
@@ -37,7 +38,8 @@ export default function Weather() {
           
         />
       </form>
-      {city?.name ? (
+      {loading && <Spinner/>}
+      {!loading && city?.name ? (
         <div>
           <div className="main mt-4">
             <img src={clear} alt="clear" />
