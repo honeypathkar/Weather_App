@@ -5,7 +5,7 @@ import clear from "./images/clear.png";
 import humidity from "./images/humidity.png";
 import wind from "./images/wind.png";
 
-export default function Weather() {
+export default function Weather(props) {
 
     const [search, setSearch] = useState("Baran");
     const [loading, setLoading] = useState(true);
