@@ -59,6 +59,21 @@
     color: rgb(0, 0, 0);
     backdrop-filter: blur(8px);
   }
+
+  @media screen and (min-width: 768px) {
+    .App {
+      width: 400px; /* Adjust as needed */
+      font-size: 1.125rem;
+      line-height: 1.75rem;
+    }
+  }
+  
+  @media screen and (min-width: 1024px) {
+    .App {
+      width: 500px; /* Adjust as needed */
+      margin: 5vh auto;
+    }
+  }
   
   
   
