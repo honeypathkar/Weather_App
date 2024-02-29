@@ -30,31 +30,39 @@ export default function Weather() {
           className="form-control me-2"
           type="search"
           placeholder="Enter City Name.."
+          value={search}
+          onChange={(e) => {
+            setSearch(e.target.value);
+          }}
           
         />
       </form>
+      {city?.name ? (
         <div>
           <div className="main mt-4">
             <img src={clear} alt="clear" />
-            <h1>Baran</h1>
-            <h2>22°C</h2>
+            <h1>{city?.name}</h1>
+            <h2>{city?.main?.temp}°C</h2>
             <div style={{lineHeight: "1rem"}}>
-            <p>Max : 23°C</p>
-            <p>Min: 19°C</p>
+            <p>Max : {city?.main?.temp_max}</p>
+            <p>Min: {city?.main?.temp_min}</p>
             </div>
 
           </div>
           <div className="other mt-4">
             <div>
             <img src={humidity} alt="" />
-            <p>Humidity: 20%</p>
+            <p>Humidity: {city?.main?.humidity}%</p>
             </div>
             <div>
             <img src={wind} alt="" />
-            <p>Wind :12km/h</p>
+            <p>Wind :{city?.wind?.speed}km/h</p>
             </div>
           </div>
         </div>
+      ) : (
+        <p className="error">Not Found</p>
+      )}
     </div>
   );
 }
