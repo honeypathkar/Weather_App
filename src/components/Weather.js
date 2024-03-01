@@ -5,12 +5,12 @@ import clear from "./images/clear.png";
 import humidity from "./images/humidity.png";
 import wind from "./images/wind.png";
 
-export default function Weather(props) {
+export default function Weather() {
 
     const [search, setSearch] = useState("Baran");
     const [loading, setLoading] = useState(true);
     const [city, setCity] = useState(null);
-    const apiKey = "5ae31873f38f72e145efd7dcf91bb748";
+    const apiKey = process.env.REACT_APP_WEATHER_API;
   
     useEffect(() => {
       const fetchWeather = async () => {
@@ -22,6 +22,7 @@ export default function Weather(props) {
         setLoading(false);
       };
       fetchWeather();
+      // eslint-disable-next-line
     }, [search]);
 
   return (
