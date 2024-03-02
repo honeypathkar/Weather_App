@@ -1,3 +1,10 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.4.14,
+* Autoprefixer: v10.4.7
+* Browsers: last 4 version
+*/
+
 /* Base styles */
 body {
   background-image: url(images/background.avif);
@@ -16,12 +23,10 @@ input[type="search"] {
   border-radius: 50px;
 }
 
-body {
-  background-color: skyblue;
-}
-
 .main {
-  justify-content: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   text-align: center;
 }
 
@@ -31,7 +36,8 @@ body {
 }
 
 .other {
-  justify-content: space-around;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
   text-align: center;
   display: block;
 }
@@ -71,13 +77,14 @@ body {
   /* Adjust as needed */
   margin: 5vh auto;
   padding: 20px;
-  /* background-color: rgba(0, 0, 0, 0.19); */
   font-size: 1rem;
   line-height: 1.5rem;
   border-radius: 8px;
-  box-shadow: 0px 0px 5px black;
+  -webkit-box-shadow: 0px 0px 5px black;
+          box-shadow: 0px 0px 5px black;
   color: rgb(0, 0, 0);
-  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+          backdrop-filter: blur(8px);
 }
 
 @media screen and (min-width: 768px) {
@@ -103,6 +110,8 @@ body {
   }
 
   .other {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
   }
 }
