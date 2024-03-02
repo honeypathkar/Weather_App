@@ -1,87 +1,108 @@
 /* Base styles */
+body {
+  background-image: url(images/background.avif);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+
 .search {
-    margin: 5% 5% 0 5%;
-  }
-  
-  input[type="search"]{
-    border-radius: 50px;
-  }
-  
-  body {
-    background-color: skyblue;
-  }
-  
-  .main {
-    justify-content: center;
-    text-align: center;
-  }
-  
-  .main img {
-    width: 100px;
-    height: 100px;
+  margin: 5% 5% 0 5%;
+}
+
+input[type="search"] {
+  border-radius: 50px;
+}
+
+body {
+  background-color: skyblue;
+}
+
+.main {
+  justify-content: center;
+  text-align: center;
+}
+
+.main img {
+  width: 150px;
+  height: 150px;
+}
+
+.other {
+  justify-content: space-around;
+  text-align: center;
+  display: block;
+}
+
+.other img {
+  width: 30px;
+  height: 30px;
+}
+
+.other p {
+  font-size: 20px;
+}
+
+.search img {
+  width: 60px;
+  height: 60px;
+
+}
+
+.search h1 {
+  text-align: center;
+}
+
+.btn {
+  border-radius: 50%;
+}
+
+.error {
+  font-size: 30px;
+  text-align: center;
+  padding: 50px;
+}
+
+
+.App {
+  width: 300px;
+  /* Adjust as needed */
+  margin: 15vh auto;
+  padding: 20px;
+  /* background-color: rgba(0, 0, 0, 0.19); */
+  font-size: 1rem;
+  line-height: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0px 0px 5px black;
+  color: rgb(0, 0, 0);
+  backdrop-filter: blur(8px);
+}
+
+@media screen and (min-width: 768px) {
+  .App {
+    width: 400px;
+    /* Adjust as needed */
+    font-size: 1.125rem;
+    line-height: 1.75rem;
   }
 
-  .other{
-    justify-content: space-around;
-    text-align: center;
+  .other {
+    display: block;
+  }
+
+
+}
+
+@media screen and (min-width: 1024px) {
+  .App {
+    width: 500px;
+    /* Adjust as needed */
+    margin: 15vh auto;
+  }
+
+  .other {
     display: flex;
   }
-
-  .other img{
-    width: 20px;
-    height: 20px;
-  }
-  
-  .other p {
-    font-size: 20px;
-  }
-  
-  .search img {
-    width: 20px;
-    height: 20px;
-  
-  }
-  
-  .btn{
-    border-radius: 50%;
-  }
-
-  .error{
-    font-size: 30px;
-	  text-align: center;
-	  padding: 50px;
-  }
-
-  
-  .App {
-    width: 300px; /* Adjust as needed */
-    margin: 5vh auto;
-    padding: 20px;
-    background-color: rgba(0, 0, 0, 0.19);
-    font-size: 1rem;
-    line-height: 1.5rem;
-    border-radius: 8px;
-    box-shadow: 0px 0px 5px black;
-    color: rgb(0, 0, 0);
-    backdrop-filter: blur(8px);
-  }
-
-  @media screen and (min-width: 768px) {
-    .App {
-      width: 400px; /* Adjust as needed */
-      font-size: 1.125rem;
-      line-height: 1.75rem;
-    }
-  }
-  
-  @media screen and (min-width: 1024px) {
-    .App {
-      width: 500px; /* Adjust as needed */
-      margin: 5vh auto;
-    }
-  }
-  
-  
-  
-  
-  
+}

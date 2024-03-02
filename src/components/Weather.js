@@ -1,9 +1,11 @@
 import "./Weather.css";
 import React, { useEffect, useState } from "react";
 import Spinner from "./Spinner"
-import clear from "./images/clear.png";
 import humidity from "./images/humidity.png";
 import wind from "./images/wind.png";
+import weather from "./images/weather.png"
+
+
 
 export default function Weather() {
 
@@ -25,9 +27,12 @@ export default function Weather() {
       // eslint-disable-next-line
     }, [search]);
 
+    // console.log(city.weather[0].icon);
+
   return (
     <div className="App">
       <form className="search">
+        <h1>Weather App <img src={weather} alt="" /> </h1>
         <input
           className="form-control me-2"
           type="search"
@@ -42,24 +47,25 @@ export default function Weather() {
       {loading && <Spinner/>}
       {!loading && city?.name ? (
         <div>
-          <div className="main mt-4">
-            <img src={clear} alt="clear" />
+          <div className="main">
+            <img src={`https://openweathermap.org/img/wn/${city.weather[0].icon}@2x.png`} alt="weather icon" />
             <h1>{city?.name}</h1>
             <h2>{city?.main?.temp}°C</h2>
             <div style={{lineHeight: "1rem"}}>
             <p>Max : {city?.main?.temp_max}</p>
             <p>Min: {city?.main?.temp_min}</p>
+            <p>{city.weather[0].main}</p>
             </div>
 
           </div>
           <div className="other mt-4">
             <div>
-            <img src={humidity} alt="" />
+            <img src={humidity} alt="humidity" /><br/>
             <p>Humidity: {city?.main?.humidity}%</p>
             </div>
             <div>
-            <img src={wind} alt="" />
-            <p>Wind :{city?.wind?.speed}km/h</p>
+            <img src={wind} alt="wind" /><br/>
+            <p>Wind: {city?.wind?.speed}km/h</p>
             </div>
           </div>
         </div>
