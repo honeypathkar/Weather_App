@@ -34,7 +34,7 @@ export default function Weather() {
       <form className="search">
         <h1>Weather App <img src={weather} alt="" /> </h1>
         <input
-          className="form-control me-2"
+          className="form-control me-2 outline-secondary"
           type="search"
           placeholder="Enter City Name.."
           value={search}
@@ -52,6 +52,7 @@ export default function Weather() {
             <h1>{city?.name}</h1>
             <h2>{city?.main?.temp}°C</h2>
             <div style={{lineHeight: "1rem"}}>
+            <p>Feels Like : {city?.main?.feels_like}</p>
             <p>Max : {city?.main?.temp_max}</p>
             <p>Min: {city?.main?.temp_min}</p>
             <p>{city.weather[0].main}</p>
@@ -61,11 +62,11 @@ export default function Weather() {
           <div className="other mt-4">
             <div>
             <img src={humidity} alt="humidity" /><br/>
-            <p>Humidity: {city?.main?.humidity}%</p>
+            <p>Humidity : {city?.main?.humidity}%</p>
             </div>
             <div>
             <img src={wind} alt="wind" /><br/>
-            <p>Wind: {city?.wind?.speed}km/h</p>
+            <p>Wind : {city?.wind?.speed}km/h</p>
             </div>
           </div>
         </div>
