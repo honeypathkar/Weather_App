@@ -1,5 +1,5 @@
 import "./Weather.css";
-import React, {useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Spinner from "./Spinner";
 import humidity from "./images/humidity.png";
 import wind from "./images/wind.png";
@@ -9,43 +9,46 @@ export default function Weather() {
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
   const [city, setCity] = useState(null);
+  const [error, setError] = useState(false); // State variable for error
+
   const apiKey = process.env.REACT_APP_WEATHER_API;
 
   const fetchWeatherByCity = async (cityName) => {
-    if(search === ""){
+    if (search === "") {
       alert("Write city name");
-    }
-    else{
+    } else {
       const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=metric&appid=${apiKey}`;
       setLoading(true);
       const response = await fetch(url);
       const result = await response.json();
       setCity(result);
       setLoading(false);
+      setError(true);
     }
   };
 
   const fetchWeatherByLocation = async () => {
     navigator.geolocation.getCurrentPosition(async (position) => {
-      const {latitude , longitude} = position.coords;
+      const { latitude, longitude } = position.coords;
       const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=${apiKey}`;
       setLoading(true);
       const response = await fetch(url);
       const result = await response.json();
       setCity(result);
       setLoading(false);
+      setError(false); // Reset error state if city is found
     });
-  }
+  };
 
   useEffect(() => {
     fetchWeatherByLocation();
     // eslint-disable-next-line
-  },[])
+  }, []);
 
   const handleSearch = (e) => {
     e.preventDefault();
     fetchWeatherByCity(search);
-  }
+  };
 
   return (
     <div className="App">
@@ -54,20 +57,21 @@ export default function Weather() {
           Weather App <img src={weather} alt="" />
         </h1>
         <div className="inputBar">
-        <input
-          className="form-control me-2 outline-secondary"
-          type="search"
-          placeholder="Enter City Name.."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-        <button type="submit" className="btn btn-outline-primary">Search</button>
+          <input
+            className="form-control me-2 outline-secondary"
+            type="search"
+            placeholder="Enter City Name.."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <button type="submit" className="btn btn-outline-primary">
+            Search
+          </button>
         </div>
-        
       </form>
       {loading && <Spinner />}
       {!loading && city?.name ? (
-        <div>
+        <div className="details">
           <div className="main">
             <img
               src={`https://openweathermap.org/img/wn/${city.weather[0].icon}.png`}
@@ -95,9 +99,9 @@ export default function Weather() {
             </div>
           </div>
         </div>
-      ) : (
-        <p className="error">Not Found</p>
-      )}
+      ) : error ? ( // Show error if city not found
+        <p className="error">City not found</p>
+      ) : null}
     </div>
   );
 }
