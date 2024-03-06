@@ -6,7 +6,7 @@ import wind from "./images/wind.png";
 import weather from "./images/weather.png";
 
 export default function Weather() {
-  const [search, setSearch] = useState("Baran");
+  const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
   const [city, setCity] = useState(null);
   const apiKey = process.env.REACT_APP_WEATHER_API;
