@@ -1,5 +1,5 @@
 import "./Weather.css";
-import React, {useState } from "react";
+import React, {useEffect, useState } from "react";
 import Spinner from "./Spinner";
 import humidity from "./images/humidity.png";
 import wind from "./images/wind.png";
@@ -11,12 +11,12 @@ export default function Weather() {
   const [city, setCity] = useState(null);
   const apiKey = process.env.REACT_APP_WEATHER_API;
 
-  const fetchWeatherByCity = async () => {
+  const fetchWeatherByCity = async (cityName) => {
     if(search === ""){
       alert("Write city name");
     }
     else{
-      const url = `https://api.openweathermap.org/data/2.5/weather?q=${search}&units=metric&appid=${apiKey}`;
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=metric&appid=${apiKey}`;
       setLoading(true);
       const response = await fetch(url);
       const result = await response.json();
@@ -25,9 +25,26 @@ export default function Weather() {
     }
   };
 
+  const fetchWeatherByLocation = async () => {
+    navigator.geolocation.getCurrentPosition(async (position) => {
+      const {latitude , longitude} = position.coords;
+      const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=${apiKey}`;
+      setLoading(true);
+      const response = await fetch(url);
+      const result = await response.json();
+      setCity(result);
+      setLoading(false);
+    });
+  }
+
+  useEffect(() => {
+    fetchWeatherByLocation();
+    // eslint-disable-next-line
+  },[])
+
   const handleSearch = (e) => {
     e.preventDefault();
-    fetchWeatherByCity();
+    fetchWeatherByCity(search);
   }
 
   return (
@@ -44,7 +61,6 @@ export default function Weather() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-        {/* <button type="submit">Search</button> */}
         <button type="submit" className="btn btn-outline-primary">Search</button>
         </div>
         
