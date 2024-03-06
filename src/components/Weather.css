@@ -57,6 +57,14 @@ input[type="search"] {
 
 }
 
+.inputBar{
+  display: flex;
+}
+.inputBar button{
+  width: fit-content;
+	padding: 5px 10px;
+	border-radius: 50px;
+}
 .search h1 {
   text-align: center;
 }

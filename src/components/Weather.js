@@ -1,5 +1,5 @@
 import "./Weather.css";
-import React, { useEffect, useState } from "react";
+import React, {useState } from "react";
 import Spinner from "./Spinner";
 import humidity from "./images/humidity.png";
 import wind from "./images/wind.png";
@@ -11,55 +11,58 @@ export default function Weather() {
   const [city, setCity] = useState(null);
   const apiKey = process.env.REACT_APP_WEATHER_API;
 
-  const fetchWeather = async () => {
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${search}&units=metric&appid=${apiKey}`;
-    setLoading(true);
-    const response = await fetch(url);
-    const result = await response.json();
-    setCity(result);
-    setLoading(false);
+  const fetchWeatherByCity = async () => {
+    if(search === ""){
+      alert("Write city name");
+    }
+    else{
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${search}&units=metric&appid=${apiKey}`;
+      setLoading(true);
+      const response = await fetch(url);
+      const result = await response.json();
+      setCity(result);
+      setLoading(false);
+    }
   };
 
-  useEffect(() => {
-    let timer = setTimeout(() => {
-      fetchWeather();
-    }, 500);
-    return () => clearTimeout(timer);
-    // eslint-disable-next-line
-  }, [search]);
-
-  // console.log(city.weather[0].icon);
+  const handleSearch = (e) => {
+    e.preventDefault();
+    fetchWeatherByCity();
+  }
 
   return (
     <div className="App">
-      <form className="search">
+      <form className="search" onSubmit={handleSearch}>
         <h1>
           Weather App <img src={weather} alt="" />
         </h1>
+        <div className="inputBar">
         <input
           className="form-control me-2 outline-secondary"
           type="search"
           placeholder="Enter City Name.."
           value={search}
-          onChange={(e) => {
-            setSearch(e.target.value);
-          }}
+          onChange={(e) => setSearch(e.target.value)}
         />
+        {/* <button type="submit">Search</button> */}
+        <button type="submit" className="btn btn-outline-primary">Search</button>
+        </div>
+        
       </form>
       {loading && <Spinner />}
       {!loading && city?.name ? (
         <div>
           <div className="main">
             <img
-              src={`https://openweathermap.org/img/wn/${city.weather[0].icon}@2x.png`}
+              src={`https://openweathermap.org/img/wn/${city.weather[0].icon}.png`}
               alt="weather icon"
             />
             <h1>{city?.name}</h1>
             <h2>{city?.main?.temp}°C</h2>
             <div style={{ lineHeight: "1rem" }}>
               <p>Feels Like : {city?.main?.feels_like}</p>
-              <p>Max : {city?.main?.temp_max}</p>
-              <p>Min: {city?.main?.temp_min}</p>
+              <p>Max : {city?.main?.temp_max + 3}</p>
+              <p>Min: {city?.main?.temp_min - 3}</p>
               <p>{city.weather[0].main}</p>
             </div>
           </div>
