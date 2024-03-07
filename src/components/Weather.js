@@ -13,28 +13,28 @@ export default function Weather() {
 
   const apiKey = process.env.REACT_APP_WEATHER_API;
 
-  const fetchWeatherByCity = async (cityName) => {
+  const fetchWeatherBySearch = async () => {
     if (search === "") {
-      alert("Write city name");
+      alert("Write city name"); //checking if city search bar empty or not
     } else {
-      const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=metric&appid=${apiKey}`;
-      setLoading(true);
-      const response = await fetch(url);
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${search}&units=metric&appid=${apiKey}`; //calling api
+      setLoading(true); //set loading state
+      const response = await fetch(url); //fetching api and convert into json
       const result = await response.json();
-      setCity(result);
+      setCity(result); //setting result to setCity state
       setLoading(false);
-      setError(true);
+      setError(true); //set error state if city is not found
     }
   };
 
   const fetchWeatherByLocation = async () => {
     navigator.geolocation.getCurrentPosition(async (position) => {
       const { latitude, longitude } = position.coords;
-      const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=${apiKey}`;
-      setLoading(true);
-      const response = await fetch(url);
+      const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=${apiKey}`; //calling api
+      setLoading(true); //set loading state
+      const response = await fetch(url); //fetching api and convert into json
       const result = await response.json();
-      setCity(result);
+      setCity(result); //setting result to setCity state
       setLoading(false);
       setError(false); // Reset error state if city is found
     });
@@ -47,8 +47,10 @@ export default function Weather() {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    fetchWeatherByCity(search);
+    fetchWeatherBySearch();
   };
+
+  console.clear();
 
   return (
     <div className="App">
@@ -78,11 +80,11 @@ export default function Weather() {
               alt="weather icon"
             />
             <h1>{city?.name}</h1>
-            <h2>{city?.main?.temp}°C</h2>
+            <h2>{Math.floor(city?.main?.temp)}°C</h2>
             <div style={{ lineHeight: "1rem" }}>
-              <p>Feels Like : {city?.main?.feels_like}</p>
-              <p>Max : {city?.main?.temp_max + 3}</p>
-              <p>Min: {city?.main?.temp_min - 3}</p>
+              <p>Feels Like : {Math.floor(city?.main?.feels_like)}°C</p>
+              <p>Max : {Math.floor(city?.main?.temp_max + 3)}°C</p>
+              <p>Min: {Math.floor(city?.main?.temp_min - 3)}°C</p>
               <p>{city.weather[0].main}</p>
             </div>
           </div>
