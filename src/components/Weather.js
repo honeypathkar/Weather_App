@@ -9,34 +9,51 @@ export default function Weather() {
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
   const [city, setCity] = useState(null);
-  const [error, setError] = useState(false); // State variable for error
+  const [error, setError] = useState(false);
+  const [localTime, setLocalTime] = useState(""); // State to store local time
+  const [localDate, setLocalDate] = useState(""); // State to store local date
 
   const apiKey = process.env.REACT_APP_WEATHER_API;
 
+  // Function to calculate local time and date based on timezone offset
+  const calculateLocalTime = (timezone) => {
+    const currentUTC =
+      new Date().getTime() + new Date().getTimezoneOffset() * 60000; // Get current UTC time in milliseconds
+    const localTime = new Date(currentUTC + timezone * 1000); // Calculate local time using the timezone offset
+    setLocalTime(localTime.toLocaleTimeString()); // Update state with the formatted local time
+    setLocalDate(localTime.toLocaleDateString()); // Update state with the formatted local date
+  };
+
+  //Modifying function for displaying local time and date
   const fetchWeatherBySearch = async () => {
     if (search === "") {
-      alert("Write city name"); //checking if city search bar empty or not
+      alert("Write city name");
     } else {
-      const url = `https://api.openweathermap.org/data/2.5/weather?q=${search}&units=metric&appid=${apiKey}`; //calling api
-      setLoading(true); //set loading state
-      const response = await fetch(url); //fetching api and convert into json
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${search}&units=metric&appid=${apiKey}`;
+      setLoading(true);
+      const response = await fetch(url);
       const result = await response.json();
-      setCity(result); //setting result to setCity state
+      setCity(result);
       setLoading(false);
-      setError(true); //set error state if city is not found
+      setError(result.cod !== 200); // Set error state if the city is not found
+      if (result.cod === 200) {
+        calculateLocalTime(result.timezone); // Calculate local time when city is found
+      }
     }
   };
 
+  //Modifying function for displaying local time and date
   const fetchWeatherByLocation = async () => {
     navigator.geolocation.getCurrentPosition(async (position) => {
       const { latitude, longitude } = position.coords;
-      const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=${apiKey}`; //calling api
-      setLoading(true); //set loading state
-      const response = await fetch(url); //fetching api and convert into json
+      const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=${apiKey}`;
+      setLoading(true);
+      const response = await fetch(url);
       const result = await response.json();
-      setCity(result); //setting result to setCity state
+      setCity(result);
       setLoading(false);
-      setError(false); // Reset error state if city is found
+      setError(false);
+      calculateLocalTime(result.timezone); // Calculate local time when location is found
     });
   };
 
@@ -49,8 +66,6 @@ export default function Weather() {
     e.preventDefault();
     fetchWeatherBySearch();
   };
-
-  console.clear();
 
   return (
     <div className="App">
@@ -81,6 +96,8 @@ export default function Weather() {
             />
             <h1>{city?.name}</h1>
             <h2>{Math.floor(city?.main?.temp)}°C</h2>
+            <p>Date: {localDate}</p> {/* Display local date */}
+            <p>Time: {localTime}</p> {/* Display local time */}
             <div style={{ lineHeight: "1rem" }}>
               <p>Feels Like : {Math.floor(city?.main?.feels_like)}°C</p>
               <p>Max : {Math.floor(city?.main?.temp_max + 3)}°C</p>
@@ -101,7 +118,7 @@ export default function Weather() {
             </div>
           </div>
         </div>
-      ) : error ? ( // Show error if city not found
+      ) : error ? (
         <p className="error">City not found</p>
       ) : null}
     </div>
