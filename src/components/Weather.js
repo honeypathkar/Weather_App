@@ -13,6 +13,7 @@ export default function Weather() {
   const [localTime, setLocalTime] = useState(""); // State to store local time
   const [localDate, setLocalDate] = useState(""); // State to store local date
 
+  //Add your api key
   const apiKey = process.env.REACT_APP_WEATHER_API;
 
   // Function to calculate local time and date based on timezone offset
